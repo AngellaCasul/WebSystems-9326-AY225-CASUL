@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact JPCS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo-container">
+      <img src="images/JPCSlogo.jpg" alt="JPCS Logo" class="logo">
+      <span class="logo-text">JPCS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <button id="darkToggle" class="toggle">🌙 Dark Mode</button>
+</nav>
+
+<div class="container">
+  <h2 class="fade" style="text-align: center; color: var(--purple); font-size: 3rem;">Contact JPCS</h2>
+  <p class="fade" style="text-align: center; font-size: 1.2rem; max-width: 700px; margin: 20px auto 40px;">
+    Have questions or inquiries? We'd love to hear from you. Send us a message and 
+    we'll get back to you as soon as possible.
+  </p>
+
+  <div class="image-section fade" style="margin-bottom: 40px;">
+    <img src="images/contact-us.jpg" alt="Contact Us">
+    <div class="image-section-content">
+      <h3>Get In Touch</h3>
+      <p>
+        Whether you're interested in joining JPCS, have questions about our events,
+        or want to collaborate with us, we're here to help. Fill out the form below
+        and our team will respond promptly.
+      </p>
+    </div>
+  </div>
+
+  <form id="contactForm" class="fade">
+    <input id="name" placeholder="Your Name" required>
+    <input id="email" type="email" placeholder="Your Email" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <p id="status"></p>
+</div>
+
+<script src="js/contact.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

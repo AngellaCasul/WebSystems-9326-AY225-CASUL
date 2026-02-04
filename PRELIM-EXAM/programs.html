@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JPCS Programs</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo-container">
+      <img src="images/JPCSlogo.jpg" alt="JPCS Logo" class="logo">
+      <span class="logo-text">JPCS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <button id="darkToggle" class="toggle">🌙 Dark Mode</button>
+</nav>
+
+<div class="container">
+  <h1 class="fade" style="text-align: center; color: var(--purple); font-size: 3rem;">Our Programs</h1>
+  <p class="fade" style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 20px auto 40px;">
+    Discover the diverse programs and initiatives we offer to help students grow their
+    technical skills, leadership abilities, and professional networks in the IT industry.
+  </p>
+
+  <div id="programList"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="programModal">
+  <div class="modal-content">
+    <h3 id="programName"></h3>
+    <p id="programCategory" style="color: var(--purple); font-size: 1.1rem; font-weight: 600; margin: 10px 0;"></p>
+    <p id="programDesc" style="line-height: 1.8; margin: 20px 0;"></p>
+    <p id="programBenefits" style="line-height: 1.8; margin: 20px 0; font-weight: 500;"></p>
+    <button onclick="closeProgram()">Close</button>
+  </div>
+</div>
+
+<!-- IMPORTANT: main.js FIRST -->
+<script src="js/main.js"></script>
+<script src="js/programs.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JPCS Events</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="logo-container">
+      <img src="images/JPCSlogo.jpg" alt="JPCS Logo" class="logo">
+      <span class="logo-text">JPCS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="programs.html">Programs</a>
+      <a href="events.html">Events</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <button id="darkToggle" class="toggle">🌙 Dark Mode</button>
+</nav>
+
+<div class="container">
+  <h2 class="fade" style="text-align: center; color: var(--purple); font-size: 3rem;">Upcoming Events</h2>
+  <p class="fade" style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 20px auto 30px;">
+    Join us for exciting workshops, seminars, and networking opportunities designed to
+    enhance your skills and expand your horizons in the tech industry.
+  </p>
+
+  <div style="text-align: center; margin: 30px 0;">
+    <label for="filter" style="font-weight: 600; margin-right: 10px; font-size: 1.1rem;">Filter by type:</label>
+    <select id="filter">
+      <option value="all">All Events</option>
+      <option value="Workshop">Workshops</option>
+      <option value="Seminar">Seminars</option>
+    </select>
+  </div>
+
+  <div id="eventList"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 style="color: var(--purple); margin-bottom: 20px;">Event Details</h3>
+    <p id="modalText" style="font-size: 1.2rem; line-height: 1.8;"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/events.js"></script>
+</body>
+</html>
