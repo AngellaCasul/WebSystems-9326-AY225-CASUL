@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PolyScrape</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">POLY<span>SCRAPE</span></div>
+    <div class="hdiv"></div>
+    <div class="header-sub">Polygon Game Scraper</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>SCRAPE &amp;<br/><em>EXPLORE</em></h1>
+  <p>Paste any Polygon.com page URL below — the server will scrape game data and display it instantly.</p>
+
+  <div class="scrape-form">
+    <div class="url-wrap">
+      <span class="url-icon">🔗</span>
+      <input type="text" id="url-input"
+        placeholder="https://www.polygon.com/best-switch-2-games/"
+        value="https://www.polygon.com/best-switch-2-games/"/>
+    </div>
+    <button class="btn" id="scrape-btn" onclick="startScrape()">
+      <span id="btn-icon">▶</span>
+      <span id="btn-text">SCRAPE</span>
+    </button>
+  </div>
+
+  <div class="url-hint">
+    Try:
+    <a href="#" onclick="setUrl('https://www.polygon.com/best-switch-2-games/');return false;">polygon.com/best-switch-2-games</a>
+    &nbsp;|&nbsp;
+    <a href="#" onclick="setUrl('https://www.polygon.com/2025-goty-contenders-game-of-the-year-dark-horses/');return false;">polygon.com/2025-goty-contenders</a>
+    &nbsp;|&nbsp;
+    <a href="#" onclick="setUrl('https://www.polygon.com/best-ps5-games-playstation-5/');return false;">polygon.com/best-ps5-games</a>
+    &nbsp;|&nbsp;
+    <a href="#" onclick="setUrl('https://www.polygon.com/best-steam-next-fest-demos-february-2026/');return false;">polygon.com/best-steam-next-fest-demos-february-2026</a>
+  </div>
+
+  <div id="progress-wrap">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+    <div class="progress-label" id="progress-label">Connecting to Polygon…</div>
+  </div>
+
+  <div id="error-box"></div>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div class="results-header" id="results-header" style="display:none">
+    <div class="results-title">
+      RESULTS &nbsp;<span id="result-count">0</span> GAMES
+    </div>
+    <div class="controls-right">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search games…" oninput="filterGames()"/>
+      </div>
+      <select id="platform-filter" onchange="filterGames()">
+        <option value="">All Platforms</option>
+      </select>
+      <div class="view-toggle">
+        <button class="view-btn active" id="grid-btn" onclick="setView('grid')" title="Grid">⊞</button>
+        <button class="view-btn" id="list-btn" onclick="setView('list')" title="List">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="game-grid"></div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <strong>PolyScrape</strong> — Data sourced from <strong>Polygon.com</strong>
+  via Python + Flask + BeautifulSoup &nbsp;|&nbsp; For educational purposes only
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
