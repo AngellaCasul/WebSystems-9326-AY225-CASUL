@@ -10,20 +10,58 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-ARTICLE_URLS = [
-    "https://www.geeksforgeeks.org/introduction-to-r-programming-language/",
-    "https://www.geeksforgeeks.org/r-data-types/",
-    "https://www.geeksforgeeks.org/r-variables/",
-    "https://www.geeksforgeeks.org/r-operators/",
-    "https://www.geeksforgeeks.org/functions-in-r-programming/",
-    "https://www.geeksforgeeks.org/control-statements-in-r-programming/",
-    "https://www.geeksforgeeks.org/loops-in-r/",
-    "https://www.geeksforgeeks.org/r-data-frames/",
-    "https://www.geeksforgeeks.org/r-lists/",
-    "https://www.geeksforgeeks.org/r-vector/",
-   "https://www.geeksforgeeks.org/r-language/r-matrices/",
-    "https://www.geeksforgeeks.org/data-visualization-in-r/",
-]
+# Only the category page URL — no hardcoded article URLs
+R_TOPIC_URL = "https://www.geeksforgeeks.org/r-programming-language/"
+
+
+def get_article_urls(max_articles=12):
+    """Automatically discovers R article URLs from the GFG R topic page."""
+    try:
+        response = requests.get(R_TOPIC_URL, headers=HEADERS, timeout=15)
+        response.raise_for_status()
+    except Exception as e:
+        print(f"Error fetching topic page: {e}")
+        return []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    urls = []
+    seen = set()
+
+    for a_tag in soup.find_all("a", href=True):
+        href = a_tag["href"]
+
+        # Must be a GFG article link
+        if not href.startswith("https://www.geeksforgeeks.org/"):
+            continue
+
+        # Skip the topic page itself
+        if href == R_TOPIC_URL:
+            continue
+
+        # Skip non-article pages
+        skip_keywords = [
+            "category", "tag", "login", "register",
+            "write", "contribute", "jobs", "courses",
+            "practice", "contest", "interview", "quiz",
+            "projects", "cheat-sheet", "exercise", "mcq",
+            "interview-questions", "multiple-choice", "#", "?"
+        ]
+        if any(kw in href.lower() for kw in skip_keywords):
+            continue
+
+        # Must look like an article slug
+        slug = href.replace("https://www.geeksforgeeks.org/", "").strip("/")
+        if "-" not in slug or len(slug) < 5:
+            continue
+
+        if href not in seen:
+            seen.add(href)
+            urls.append(href)
+
+        if len(urls) >= max_articles:
+            break
+
+    return urls
 
 
 def scrape_article(url):
@@ -154,12 +192,28 @@ def scrape_article(url):
 
 
 def run_scraper(progress_callback=None):
-    """Scrapes all articles and saves to data/r_topics.json"""
+    """Scrapes all R articles and saves to data/r_topics.json"""
     os.makedirs("data", exist_ok=True)
     results = []
-    total = len(ARTICLE_URLS)
 
-    for i, url in enumerate(ARTICLE_URLS):
+    # Step 1: Dynamically discover article URLs
+    if progress_callback:
+        progress_callback("Finding R articles from GeeksforGeeks...")
+
+    urls = get_article_urls(max_articles=12)
+
+    if not urls:
+        if progress_callback:
+            progress_callback("No articles found!")
+        return []
+
+    if progress_callback:
+        progress_callback(f"Found {len(urls)} articles. Starting scrape...")
+
+    total = len(urls)
+
+    # Step 2: Scrape each discovered article
+    for i, url in enumerate(urls):
         if progress_callback:
             progress_callback(f"Scraping article {i+1} of {total}: {url.split('/')[-2].replace('-', ' ').title()}")
 

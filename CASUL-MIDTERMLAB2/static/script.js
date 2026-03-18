@@ -22,6 +22,12 @@ function showToast(msg, type = "success") {
   setTimeout(() => t.className = "toast", 3000);
 }
 
+// ── SORT BY DIFFICULTY ────────────────────────────────────
+function sortByDifficulty(articles) {
+  const order = { "Easy": 1, "Basic": 1, "Medium": 2, "Hard": 3, "Expert": 4, "Not Available": 5 };
+  return [...articles].sort((a, b) => (order[a.difficulty] || 5) - (order[b.difficulty] || 5));
+}
+
 // ── STATS ─────────────────────────────────────────────────
 function updateStats(articles) {
   document.getElementById("stat-total").textContent  = articles.length;
@@ -42,7 +48,10 @@ function renderArticles(articles) {
     return;
   }
 
-  grid.innerHTML = articles.map((a, i) => `
+  // Sort Easy → Medium → Hard before rendering
+  const sorted = sortByDifficulty(articles);
+
+  grid.innerHTML = sorted.map((a, i) => `
     <div class="article-card" id="card-${i}" onclick="toggleCard(${i})">
       <div class="art-header">
         <div class="art-num">${String(i+1).padStart(2,"0")}</div>
@@ -176,7 +185,7 @@ async function startScrape() {
 async function generatePDF() {
   if (!articlesData.length) { showToast("No data to export.", "error"); return; }
 
-  const name = document.getElementById("student-name").value.trim() || "Student";
+  const name = document.getElementById("student-name").value.trim() || "Anonymous";
   const btn  = document.getElementById("btn-pdf");
   btn.disabled = true;
   btn.textContent = "⏳ Generating…";
@@ -213,12 +222,10 @@ async function generatePDF() {
 function clearData() {
   articlesData = [];
 
-  // Reset stats
   document.getElementById("stat-total").textContent  = "—";
   document.getElementById("stat-easy").textContent   = "—";
   document.getElementById("stat-medium").textContent = "—";
 
-  // Reset articles grid back to empty state
   document.getElementById("articles-grid").innerHTML = `
     <div id="empty-state">
       <div class="emoji">📚</div>
@@ -226,7 +233,6 @@ function clearData() {
     </div>
   `;
 
-  // Hide articles label and disable PDF button
   document.getElementById("articles-label").style.display = "none";
   document.getElementById("btn-pdf").disabled = true;
 
