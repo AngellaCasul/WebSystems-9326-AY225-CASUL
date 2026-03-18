@@ -4,7 +4,6 @@ import queue
 import os
 import json
 from datetime import datetime
-
 from scraper import run_scraper, load_data, has_data
 from pdf_gen import generate_pdf
 
