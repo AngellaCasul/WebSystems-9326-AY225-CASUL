@@ -15,32 +15,37 @@ ARTICLE_URLS = [
     "https://www.geeksforgeeks.org/r-data-types/",
     "https://www.geeksforgeeks.org/r-variables/",
     "https://www.geeksforgeeks.org/r-operators/",
-    "https://www.geeksforgeeks.org/r-functions/",
+    "https://www.geeksforgeeks.org/functions-in-r-programming/",
     "https://www.geeksforgeeks.org/control-statements-in-r-programming/",
     "https://www.geeksforgeeks.org/loops-in-r/",
-    "https://www.geeksforgeeks.org/r-data-frame/",
+    "https://www.geeksforgeeks.org/r-data-frames/",
     "https://www.geeksforgeeks.org/r-lists/",
     "https://www.geeksforgeeks.org/r-vector/",
-    "https://www.geeksforgeeks.org/r-matrix/",
+   "https://www.geeksforgeeks.org/r-language/r-matrices/",
     "https://www.geeksforgeeks.org/data-visualization-in-r/",
 ]
 
 
 def scrape_article(url):
-    try:
-        response = requests.get(url, headers=HEADERS, timeout=15)
-        response.raise_for_status()
-    except Exception as e:
-        return {
-            "url": url,
-            "title": "Not Available",
-            "concepts": "Not Available",
-            "difficulty": "Not Available",
-            "code_snippets": ["Not Available"],
-            "complexity": ["Not Available"],
-            "related_links": [{"title": "Not Available", "url": ""}],
-            "scraped_at": datetime.now().isoformat(),
-        }
+    # Try up to 3 times before giving up
+    for attempt in range(3):
+        try:
+            response = requests.get(url, headers=HEADERS, timeout=15)
+            response.raise_for_status()
+            break
+        except Exception as e:
+            if attempt == 2:
+                return {
+                    "url": url,
+                    "title": "Not Available",
+                    "concepts": "Not Available",
+                    "difficulty": "Not Available",
+                    "code_snippets": ["Not Available"],
+                    "complexity": ["Not Available"],
+                    "related_links": [{"title": "Not Available", "url": ""}],
+                    "scraped_at": datetime.now().isoformat(),
+                }
+            time.sleep(3)
 
     soup = BeautifulSoup(response.text, "html.parser")
 
